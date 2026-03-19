@@ -1,6 +1,6 @@
 name: Update Service using update-image
 on:
-  push:
+  workflow_dispatch:
     branches:
       - master # branch to trigger on
 
@@ -17,12 +17,13 @@ jobs:
     steps: 
     
     # install and login to the cloud
-    - name: Duplo Setup
+    - name: Check Node Version
+      run: node -v
       uses: duplocloud/actions@node24-test
 
     # uses duploctl from above
     - name: Update Service
-      uses: duplocloud/actions/update-image@v0.0.5
+      uses: duplocloud/actions/update-image@node24-test
       with:
         name: serv1
         image: nginx:123
