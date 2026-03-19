@@ -1,6 +1,6 @@
 name: Update Service using update-image
 on:
-  workflow_dispatch:
+  push:
     branches:
       - master # branch to trigger on
 
@@ -9,15 +9,15 @@ jobs:
     name: Update Service
     runs-on: ubuntu-latest
     environment: 
-      name: qa
+      name: perf
     env:
-      DUPLO_TOKEN: AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAWKi-lttrkUe1gVdRkKdTJgAAAAACAAAAAAAQZgAAAAEAACAAAAB8XtBRAlsSPWpPO0ycKdY2-asOG8q-yBs3gQCDLt6L9wAAAAAOgAAAAAIAACAAAADWKlkYAbxRY90MlcbkK3TieGpeaS_DT2uZCn-KrmCMj8AAAADakVNKyRPlPRo-QVnIgH17JwW4eZR4h1C7nv9Ia7kLKdFiLW451eE3QIZptMlbuCcidiG43c2x0aee_8LBoTkdDsqmV-jZxoZ_Glg3hCgmzCBi5Wb6yEj3txkoeYi2jlHe946Si28fSHcc4Afa4l0YQWQjSTZ4ikJ4ZOO9msthOXTC0RJHk25XP5YUKhtMe4kfJc6LKfkGKCsIUqjVrKN49QFmmcMFvcb3ov1zMA9k2Qi5pseuPIX41k9c9RduLSJAAAAAPDskhVpT8VYL6WxuvnQ5nnBBfXcuGEgHxnZZ6bV_qi9NZEnrhlgJ3FyZiquNq8cogsSDplO1VsZFZW8__A2z8Q
-      DUPLO_HOST: https://qa-aws.duplocloud.net/
-      DUPLO_TENANT: auto-02
+      DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
+      DUPLO_HOST: https://perf.duplocloud.net
+      DUPLO_TENANT: qaperf-1-80	
     steps: 
     
     # install and login to the cloud
-    - name: Check Node Version
+    - name: Duplo Setup
       uses: duplocloud/actions@node24-test
 
     # uses duploctl from above
@@ -31,9 +31,9 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ASIA433JFCAGG7S66HDF
-        aws-secret-access-key: SsOcabevgpCN4fNYFC2MVTLjQG+FIif13EhL5qNx
-        aws-region: us-east-2     
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2     
 
     - name: Update Multiple Images
       uses: duplocloud/actions/update-images@node24-test
