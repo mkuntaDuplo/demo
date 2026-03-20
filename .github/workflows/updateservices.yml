@@ -25,7 +25,7 @@ jobs:
       uses: mkuntaDuplo/actions/update-image@node24-test
       with:
         name: serv1
-        image: nginx:latest
+        image: nginx:123
         type: service
 
     - name: Configure AWS Credentials
