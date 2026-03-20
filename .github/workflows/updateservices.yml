@@ -18,11 +18,11 @@ jobs:
     
     # install and login to the cloud
     - name: Duplo Setup
-      uses: duplocloud/actions@node24-test
+      uses: mkuntaDuplo/actions@node24-test
 
     # uses duploctl from above
     - name: Update Service
-      uses: duplocloud/actions/update-image@node24-test
+      uses: mkuntaDuplo/actions/update-image@node24-test
       with:
         name: serv1
         image: nginx:123
@@ -37,18 +37,13 @@ jobs:
         mask-account-id: 'true'   
 
     - name: Update Multiple Images
-      uses: duplocloud/actions/update-images@node24-test
+      uses: mkuntaDuplo/actions/update-images@node24-test
       with:
         services: |
           [
-             
             {
               "service": "serv1",
               "image": "myregistry/frontend:v1.2.3"
             }
-          
           ]
-
-  
-
         
